@@ -1,0 +1,81 @@
+from enum import StrEnum
+
+
+class SiteType(StrEnum):
+    SOLAR_FARM = "SOLAR_FARM"
+    WIND_FARM = "WIND_FARM"
+    RAIL = "RAIL"
+    BRIDGE = "BRIDGE"
+    MINE = "MINE"
+    TRANSMISSION = "TRANSMISSION"
+    INDUSTRIAL = "INDUSTRIAL"
+    CONSTRUCTION = "CONSTRUCTION"
+    OTHER = "OTHER"
+
+
+class SiteStatus(StrEnum):
+    ACTIVE = "ACTIVE"
+    INACTIVE = "INACTIVE"
+    MAINTENANCE = "MAINTENANCE"
+    ARCHIVED = "ARCHIVED"
+
+
+class RiskLevel(StrEnum):
+    LOW = "LOW"
+    MODERATE = "MODERATE"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class InspectionStatus(StrEnum):
+    SCHEDULED = "SCHEDULED"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+
+
+class AnomalySeverity(StrEnum):
+    LOW = "LOW"
+    MODERATE = "MODERATE"
+    HIGH = "HIGH"
+    CRITICAL = "CRITICAL"
+
+
+class AnomalyStatus(StrEnum):
+    OPEN = "OPEN"
+    ACKNOWLEDGED = "ACKNOWLEDGED"
+    RESOLVED = "RESOLVED"
+    FALSE_POSITIVE = "FALSE_POSITIVE"
+
+
+class ImageReviewStatus(StrEnum):
+    NOT_ANALYZED = "NOT_ANALYZED"
+    PENDING_REVIEW = "PENDING_REVIEW"
+    APPROVED = "APPROVED"
+    REJECTED = "REJECTED"
+
+
+class ReportIngestionStatus(StrEnum):
+    NOT_STARTED = "NOT_STARTED"
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+
+
+class JobType(StrEnum):
+    REPORT_INGESTION = "REPORT_INGESTION"
+    IMAGE_ANALYSIS = "IMAGE_ANALYSIS"
+
+
+class JobStatus(StrEnum):
+    PENDING = "PENDING"
+    PROCESSING = "PROCESSING"
+    COMPLETED = "COMPLETED"
+    FAILED = "FAILED"
+
+
+class MessageRole(StrEnum):
+    USER = "USER"
+    ASSISTANT = "ASSISTANT"
+    TOOL_STATUS = "TOOL_STATUS"

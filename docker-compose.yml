@@ -1,0 +1,45 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: aerialops
+      POSTGRES_USER: aerialops
+      POSTGRES_PASSWORD: aerialops-local-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U aerialops -d aerialops"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - aerialops-postgres:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    environment:
+      AERIALOPS_ENVIRONMENT: production
+      AERIALOPS_DATABASE_URL: postgresql+psycopg://aerialops:aerialops-local-only@database:5432/aerialops
+      AERIALOPS_UPLOAD_DIRECTORY: /app/data/uploads
+      AERIALOPS_AGENT_PROVIDER: ${AERIALOPS_AGENT_PROVIDER:-deterministic}
+      AERIALOPS_GEMINI_API_KEY: ${AERIALOPS_GEMINI_API_KEY:-}
+      AERIALOPS_GEMINI_MODEL: ${AERIALOPS_GEMINI_MODEL:-gemini-2.5-flash}
+      AERIALOPS_VISION_PROVIDER: ${AERIALOPS_VISION_PROVIDER:-disabled}
+    depends_on:
+      database:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - aerialops-uploads:/app/data/uploads
+
+  frontend:
+    build: ./frontend
+    environment:
+      AERIALOPS_API_BASE_URL: http://backend:8000
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+
+volumes:
+  aerialops-postgres:
+  aerialops-uploads:
